@@ -1,36 +1,212 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DevOps Portfolio
 
-## Getting Started
+A modern portfolio for Md. Jakir Hosen, positioned as a DevOps, Cloud, and Platform Engineer. The experience combines a professional operations-console visual language with recruiter-friendly clarity and engineering-focused case studies.
 
-First, run the development server:
+## Project Overview
+
+- Next.js 16 App Router portfolio
+- TypeScript and Tailwind CSS
+- Sanity CMS with Studio support
+- DevOps-focused visual design language
+- Project and article case study routes
+- Contact and resume support
+- Vercel-ready deployment structure
+
+## Tech Stack
+
+- Next.js 16
+- React 19
+- TypeScript
+- Tailwind CSS
+- Sanity
+- next-sanity
+- Framer Motion
+- Lenis
+- Lucide icons
+
+## Architecture
+
+This project follows the recommended Vercel + Sanity content model:
+
+- Frontend: Vercel-hosted Next.js app
+- CMS: Sanity Studio
+- Content: Sanity documents for projects, experience, skills, articles, and site settings
+- Static routes: project and article detail pages are generated for content-driven pages
+
+## Local Development
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Copy the environment file:
+
+```bash
+copy .env.example .env.local
+```
+
+3. Provide your Sanity values in `.env.local`.
+
+4. Start the app:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The app uses the following variables:
 
-## Learn More
+```env
+NEXT_PUBLIC_SANITY_PROJECT_ID=
+NEXT_PUBLIC_SANITY_DATASET=
+NEXT_PUBLIC_SANITY_API_VERSION=
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
 
-To learn more about Next.js, take a look at the following resources:
+SANITY_API_READ_TOKEN=
+CONTACT_EMAIL=
+RESEND_API_KEY=
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Notes:
+- `NEXT_PUBLIC_*` values are public and used by the frontend.
+- `SANITY_API_READ_TOKEN` and `RESEND_API_KEY` are secret values and should never be committed.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Sanity Setup
 
-## Deploy on Vercel
+1. Create a new Sanity project.
+2. Copy the project ID and dataset name into `.env.local`.
+3. Start the Studio:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npx sanity dev
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The app also exposes Studio at `/studio` through the Next.js route.
+
+## Sanity Studio
+
+The Studio includes the key content models for:
+
+- Site Settings
+- Experience
+- Skills
+- Projects
+- Articles
+
+You can manage content at `/studio` after the app is running.
+
+## Content Management
+
+The portfolio is designed so content can be updated without redesigning the app. Key editable areas include:
+
+- home-page messaging
+- introduction and about copy
+- skills by category
+- work experience timeline
+- featured project case studies
+- article posts
+- contact metadata
+
+## Development Commands
+
+```bash
+npm install
+npm run dev
+npm run build
+npm run start
+npm run lint
+```
+
+## Build
+
+To create a production build:
+
+```bash
+npm run build
+```
+
+## Deployment
+
+### Vercel Deployment
+
+This is the preferred deployment target.
+
+1. Push the repo to GitHub.
+2. Import the project into Vercel.
+3. Add the required environment variables.
+4. Deploy.
+
+### Render Deployment
+
+Render can be used for additional services if needed, but the default architecture keeps the frontend on Vercel and uses Sanity as the content layer.
+
+## Project Structure
+
+```text
+src/
+  app/
+    (frontend)/
+      page.tsx
+      layout.tsx
+      globals.css
+      projects/
+      articles/
+      contact/
+      not-found.tsx
+  components/
+    command-palette/
+    layout/
+    providers/
+    sections/
+  lib/
+    site-data.ts
+  sanity/
+    env.ts
+    schemaTypes/
+    structure.ts
+  types/
+    portfolio.ts
+```
+
+## Adding Projects
+
+Add or update entries in `src/lib/site-data.ts` to manage project metadata. Each project can include:
+
+- title and slug
+- category and status
+- summary and description
+- technologies
+- cover and gallery images
+- code, docs, and live URLs
+- case-study sections
+
+## Adding Articles
+
+Use the article entries in `src/lib/site-data.ts` to add new technical writing posts. Each article supports:
+
+- title and excerpt
+- cover image
+- author and date
+- reading time
+- tags
+- article body content
+
+## Adding Screenshots
+
+Each project includes a gallery field in the data model. Add image URLs or local assets to extend the project case-study layout.
+
+## Troubleshooting
+
+- If `npm run dev` fails because of missing environment variables, populate `.env.local`.
+- If Sanity Studio does not load, confirm the project ID and dataset values are correct.
+- If image URLs do not render, check the remote pattern configuration in `next.config.ts`.
+- If the app has stale dependencies, reinstall with `npm install`.
+
+## Notes
+
+This portfolio is intentionally designed around a DevOps operations-console aesthetic while remaining recruiter-friendly, accessible, and fast. It is easy to extend as content grows and can be adapted to a full CMS-managed version later.
