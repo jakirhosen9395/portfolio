@@ -310,6 +310,19 @@ The route validates name, email, subject, and message on the server. It rejects 
 
 After deployment, submit a test message from `/contact` and verify delivery in the configured inbox. Do not test with real credentials committed to the repository.
 
+The API logs safe diagnostics without logging API keys, authorization headers, message bodies, or visitor email addresses. Useful log categories include:
+
+- `delivery configuration missing`
+- `invalid request payload`
+- `resend_authentication_failure`
+- `sender_configuration_failure`
+- `resend_validation_failure`
+- `resend_rate_limit`
+- `resend_api_error`
+- `Resend request accepted`
+
+To inspect them, open Vercel **Project → Deployments → select the production deployment → Functions → `/api/contact` → Logs**. A successful response means Resend accepted the request and provides a provider message ID in the server log; it does not independently prove inbox delivery.
+
 ## 12. Vercel Setup
 
 1. Open <https://vercel.com/> and sign in.
@@ -425,9 +438,11 @@ Confirm `NEXT_PUBLIC_SANITY_PROJECT_ID` and `NEXT_PUBLIC_SANITY_DATASET` are set
 
 Confirm `RESEND_API_KEY`, `CONTACT_EMAIL`, and `CONTACT_FROM_EMAIL` are configured in the same Vercel environment as the deployment. The route returns a generic configuration error when any is missing.
 
+After changing any variable, redeploy. Check the `/api/contact` function logs for the safe category explaining whether configuration, authentication, sender verification, validation, rate limiting, or Resend itself failed.
+
 ### Resend email is not received
 
-Check Resend logs, sender verification, spam folders, daily quota, and the destination address. Use a verified sender domain for production delivery.
+Check Resend logs, sender verification, spam folders, daily quota, and the destination address. `CONTACT_FROM_EMAIL` must be a sender Resend permits, normally an address on a verified domain. The visitor address is sent as `replyTo`, not as `from`. Use a verified sender domain for production delivery.
 
 ### Resume does not open
 

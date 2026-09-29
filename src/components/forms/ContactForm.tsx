@@ -26,8 +26,7 @@ export default function ContactForm({ className = '' }: { className?: string }) 
     }
 
     if (!response.ok) {
-      const result = await response.json().catch(() => ({ error: 'The message could not be sent.' }))
-      setError(result.error ?? 'The message could not be sent.')
+      setError(response.status === 400 ? 'Please check the form fields and try again.' : response.status === 429 ? 'Please wait before sending another message.' : 'We could not send your message right now. Please try again later.')
       setStatus('error')
       return
     }

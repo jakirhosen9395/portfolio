@@ -77,6 +77,8 @@ RESEND_API_KEY=
 Notes:
 - `NEXT_PUBLIC_*` values are public and used by the frontend.
 - `SANITY_API_READ_TOKEN` and `RESEND_API_KEY` are secret values and should never be committed.
+- `CONTACT_EMAIL` is the destination inbox and `CONTACT_FROM_EMAIL` must be accepted by Resend, usually on a verified sending domain.
+- Add contact variables in Vercel under **Project → Settings → Environment Variables**, then redeploy before testing `/contact`.
 
 ## Sanity Setup
 
