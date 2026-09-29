@@ -26,6 +26,7 @@ function classifyResendError(error: { name?: unknown; message?: unknown; statusC
 }
 
 export async function POST(request: Request) {
+  console.info('[contact] request received')
   const forwardedFor = request.headers.get('x-forwarded-for')
   const requester = forwardedFor?.split(',')[0]?.trim() ?? 'unknown'
   const now = Date.now()
@@ -33,7 +34,7 @@ export async function POST(request: Request) {
 
   if (lastRequest && now - lastRequest < requestWindow) {
     console.warn('[contact] request throttled', { requester })
-    return NextResponse.json({ error: 'Please wait before sending another message.' }, { status: 429 })
+    return NextResponse.json({ success: false, error: 'rate_limit' }, { status: 429 })
   }
 
   try {
@@ -50,12 +51,17 @@ export async function POST(request: Request) {
     }
     if (!name || name.length > 100 || !isValidEmail(email) || email.length > 254 || !subject || subject.length > 160 || !message || message.length > 5000) {
       console.warn('[contact] invalid request payload')
-      return NextResponse.json({ error: 'Please provide a valid name, email, subject, and message.' }, { status: 400 })
+      return NextResponse.json({ success: false, error: 'validation' }, { status: 400 })
     }
 
     const apiKey = process.env.RESEND_API_KEY
     const destination = process.env.CONTACT_EMAIL
     const sender = process.env.CONTACT_FROM_EMAIL
+    console.info('[contact] Resend configuration', {
+      RESEND_API_KEY: Boolean(apiKey),
+      CONTACT_EMAIL: Boolean(destination),
+      CONTACT_FROM_EMAIL: Boolean(sender),
+    })
     const missingConfiguration = [
       !apiKey && 'RESEND_API_KEY',
       !destination && 'CONTACT_EMAIL',
@@ -63,18 +69,18 @@ export async function POST(request: Request) {
     ].filter((value): value is string => Boolean(value))
     if (missingConfiguration.length > 0) {
       console.error('[contact] delivery configuration missing', { missingConfiguration })
-      return NextResponse.json({ error: 'Contact delivery is not configured.' }, { status: 503 })
+      return NextResponse.json({ success: false, error: 'email_delivery' }, { status: 503 })
     }
 
     if (!apiKey || !destination || !sender) {
-      return NextResponse.json({ error: 'Contact delivery is not configured.' }, { status: 503 })
+      return NextResponse.json({ success: false, error: 'email_delivery' }, { status: 503 })
     }
 
     console.info('[contact] validation passed; attempting Resend request')
     const resend = new Resend(apiKey)
     const { data, error } = await resend.emails.send({
       from: sender,
-      to: destination,
+      to: [destination],
       replyTo: email,
       subject: `[Portfolio] ${subject}`,
       text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
@@ -87,7 +93,12 @@ export async function POST(request: Request) {
         statusCode: typeof error.statusCode === 'number' ? error.statusCode : undefined,
         providerMessage: redactProviderMessage(error.message),
       })
-      return NextResponse.json({ error: 'We could not send your message right now. Please try again later.' }, { status: 502 })
+      return NextResponse.json({ success: false, error: 'email_delivery' }, { status: 502 })
+    }
+
+    if (!data?.id) {
+      console.error('[contact] Resend returned no accepted message ID')
+      return NextResponse.json({ success: false, error: 'email_delivery' }, { status: 502 })
     }
 
     recentRequests.set(requester, now)
@@ -98,6 +109,6 @@ export async function POST(request: Request) {
       errorType: error instanceof Error ? error.name : 'unknown',
       providerMessage: redactProviderMessage(error instanceof Error ? error.message : undefined),
     })
-    return NextResponse.json({ error: 'The message could not be processed.' }, { status: 400 })
+    return NextResponse.json({ success: false, error: 'request' }, { status: 400 })
   }
 }

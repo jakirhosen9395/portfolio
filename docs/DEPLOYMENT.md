@@ -321,6 +321,20 @@ The API logs safe diagnostics without logging API keys, authorization headers, m
 - `resend_api_error`
 - `Resend request accepted`
 
+Responses use this shape:
+
+```json
+{ "success": true }
+```
+
+or:
+
+```json
+{ "success": false, "error": "validation" }
+```
+
+Email-provider failures use `email_delivery`; they never expose Resend's raw error or credentials to the browser.
+
 To inspect them, open Vercel **Project → Deployments → select the production deployment → Functions → `/api/contact` → Logs**. A successful response means Resend accepted the request and provides a provider message ID in the server log; it does not independently prove inbox delivery.
 
 ## 12. Vercel Setup
