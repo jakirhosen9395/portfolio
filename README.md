@@ -1,5 +1,5 @@
 # DevOps Portfolio
-
+ 
 A modern portfolio for Md. Jakir Hosen, positioned as a DevOps, Cloud, and Platform Engineer. The experience combines a professional operations-console visual language with recruiter-friendly clarity and engineering-focused case studies.
 
 ## Project Overview
