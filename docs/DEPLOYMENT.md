@@ -150,6 +150,8 @@ The free Sanity plan currently supports public datasets. A private dataset may r
 
 The public variables are safe to expose in browser configuration. The read token is never prefixed with `NEXT_PUBLIC_` and is only read by the server-side content loader.
 
+If the public Sanity project ID is empty, the application does not initialize a Sanity client. The homepage, sitemap, metadata, and content routes use the confirmed static fallback data so a first Vercel deployment can complete before Sanity is configured. If the ID and dataset are present but Sanity returns an error, the error is logged with an actionable message and the same fallback is returned. Configure the correct project ID and dataset before expecting CMS content.
+
 ## 6. Sanity Studio
 
 Start the Next.js app, then open:

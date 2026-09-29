@@ -1,6 +1,7 @@
 import { groq } from 'next-sanity'
 import { articles as fallbackArticles, experiences as fallbackExperiences, projects as fallbackProjects, siteSettings as fallbackSiteSettings, skillCategories as fallbackSkillCategories } from '@/lib/site-data'
 import type { Article, Experience, Project, SkillCategory, SiteSettings } from '@/types/portfolio'
+import { isSanityConfigured } from '../env'
 import { client } from './client'
 import { urlForImage } from './image'
 
@@ -108,7 +109,7 @@ function mapArticle(article: RawArticle): Article {
 }
 
 export async function getPortfolioContent() {
-  if (!client.config().projectId) {
+  if (!isSanityConfigured || !client) {
     return { siteSettings: fallbackSiteSettings, experiences: fallbackExperiences, skillCategories: fallbackSkillCategories, projects: fallbackProjects, articles: fallbackArticles }
   }
 
@@ -129,7 +130,8 @@ export async function getPortfolioContent() {
       projects: content.projects?.length ? content.projects.map(mapProject) : fallbackProjects,
       articles: content.articles?.length ? content.articles.map(mapArticle) : fallbackArticles,
     }
-  } catch {
+  } catch (error) {
+    console.error('Sanity content fetch failed. Check the project ID, dataset, token, and published content.', error)
     return { siteSettings: fallbackSiteSettings, experiences: fallbackExperiences, skillCategories: fallbackSkillCategories, projects: fallbackProjects, articles: fallbackArticles }
   }
 }
