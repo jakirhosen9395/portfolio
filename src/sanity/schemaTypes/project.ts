@@ -13,6 +13,7 @@ export const project = defineType({
     defineField({ name: 'status', title: 'Status', type: 'string' }),
     defineField({ name: 'date', title: 'Date', type: 'datetime' }),
     defineField({ name: 'coverImage', title: 'Cover Image', type: 'image', options: { hotspot: true } }),
+    defineField({ name: 'gallery', title: 'Project Gallery', type: 'array', of: [{ type: 'image', options: { hotspot: true } }] }),
     defineField({ name: 'technologies', title: 'Technologies', type: 'array', of: [{ type: 'string' }] }),
     defineField({ name: 'githubUrl', title: 'GitHub URL', type: 'url' }),
     defineField({ name: 'gitlabUrl', title: 'GitLab URL', type: 'url' }),

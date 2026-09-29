@@ -6,18 +6,21 @@ import HeroSection from '@/components/sections/HeroSection'
 import ProcessSection from '@/components/sections/ProcessSection'
 import ProjectsSection from '@/components/sections/ProjectsSection'
 import SkillsSection from '@/components/sections/SkillsSection'
+import { getPortfolioContent } from '@/sanity/lib/content'
 
-export default function Home() {
+export default async function Home() {
+  const { siteSettings, experiences, skillCategories, projects, articles } = await getPortfolioContent()
+
   return (
     <main>
-      <HeroSection />
-      <AboutSection />
-      <SkillsSection />
-      <ExperienceSection />
-      <ProjectsSection />
+      <HeroSection settings={siteSettings} />
+      <AboutSection settings={siteSettings} />
+      <SkillsSection skillCategories={skillCategories} />
+      <ExperienceSection experiences={experiences} />
+      <ProjectsSection projects={projects} />
       <ProcessSection />
-      <ArticlesSection />
-      <ContactSection />
+      <ArticlesSection articles={articles} />
+      <ContactSection settings={siteSettings} />
     </main>
   )
 }

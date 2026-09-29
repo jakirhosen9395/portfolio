@@ -2,14 +2,16 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft, Code2, ExternalLink, Link2 } from 'lucide-react'
 import { notFound } from 'next/navigation'
-import { projects } from '@/lib/site-data'
+import { getPortfolioContent } from '@/sanity/lib/content'
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const { projects } = await getPortfolioContent()
   return projects.map((project) => ({ slug: project.slug }))
 }
 
 export default async function ProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
+  const { projects } = await getPortfolioContent()
   const project = projects.find((item) => item.slug === slug)
 
   if (!project) {
@@ -37,7 +39,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
 
       <header className="mb-10 overflow-hidden rounded-2xl border border-border bg-surface/70">
         <div className="relative h-72 w-full">
-          <Image src={project.coverImage} alt={project.title} fill className="object-cover" />
+          {project.coverImage && <Image src={project.coverImage} alt={project.title} fill sizes="(max-width: 1024px) 100vw, 900px" className="object-cover" />}
         </div>
         <div className="space-y-6 p-6 md:p-8">
           <div className="flex flex-wrap items-center gap-3">
@@ -111,7 +113,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
               {project.gallery.map((image) => (
                 <div key={image} className="relative h-28 overflow-hidden rounded-lg border border-border">
-                  <Image src={image} alt={project.title} fill className="object-cover" />
+                  <Image src={image} alt={project.title} fill sizes="(max-width: 1024px) 50vw, 400px" className="object-cover" />
                 </div>
               ))}
             </div>

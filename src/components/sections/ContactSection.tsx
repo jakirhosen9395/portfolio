@@ -1,6 +1,8 @@
 import { Mail, BriefcaseBusiness, Code2, Terminal } from 'lucide-react'
+import type { SiteSettings } from '@/types/portfolio'
+import ContactForm from '@/components/forms/ContactForm'
 
-export default function ContactSection() {
+export default function ContactSection({ settings }: { settings: SiteSettings }) {
   return (
     <section id="contact" className="py-24 relative border-t border-border bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -18,17 +20,17 @@ export default function ContactSection() {
             </p>
             
             <div className="space-y-6">
-              <a href="mailto:hello@your-domain.com" className="flex items-center gap-4 text-text-muted hover:text-primary transition-colors group">
+              {settings.email && <a href={`mailto:${settings.email}`} className="flex items-center gap-4 text-text-muted hover:text-primary transition-colors group">
                 <div className="w-12 h-12 rounded-full bg-surface border border-border flex items-center justify-center group-hover:border-primary/50 transition-colors">
                   <Mail className="w-5 h-5" />
                 </div>
                 <div>
                   <div className="text-sm font-mono mb-1 text-text-main">Email</div>
-                  <div className="text-lg">hello@your-domain.com</div>
+                  <div className="text-lg">{settings.email}</div>
                 </div>
-              </a>
+              </a>}
               
-              <a href="#" className="flex items-center gap-4 text-text-muted hover:text-primary transition-colors group">
+              {settings.linkedin && <a href={settings.linkedin} target="_blank" rel="noreferrer" className="flex items-center gap-4 text-text-muted hover:text-primary transition-colors group">
                 <div className="w-12 h-12 rounded-full bg-surface border border-border flex items-center justify-center group-hover:border-primary/50 transition-colors">
                   <BriefcaseBusiness className="w-5 h-5" />
                 </div>
@@ -36,9 +38,9 @@ export default function ContactSection() {
                   <div className="text-sm font-mono mb-1 text-text-main">LinkedIn</div>
                   <div className="text-lg">Connect professionally</div>
                 </div>
-              </a>
+              </a>}
 
-              <a href="#" className="flex items-center gap-4 text-text-muted hover:text-primary transition-colors group">
+              {settings.github && <a href={settings.github} target="_blank" rel="noreferrer" className="flex items-center gap-4 text-text-muted hover:text-primary transition-colors group">
                 <div className="w-12 h-12 rounded-full bg-surface border border-border flex items-center justify-center group-hover:border-primary/50 transition-colors">
                   <Code2 className="w-5 h-5" />
                 </div>
@@ -46,7 +48,7 @@ export default function ContactSection() {
                   <div className="text-sm font-mono mb-1 text-text-main">GitHub</div>
                   <div className="text-lg">Explore my code</div>
                 </div>
-              </a>
+              </a>}
             </div>
           </div>
           
@@ -55,55 +57,7 @@ export default function ContactSection() {
               <Terminal className="w-24 h-24" />
             </div>
             
-            <form className="relative z-10 flex flex-col gap-4">
-              <div className="flex flex-col gap-1.5">
-                <label htmlFor="name" className="text-sm font-mono text-text-main">Name</label>
-                <input 
-                  type="text" 
-                  id="name" 
-                  className="bg-background border border-border rounded px-4 py-3 text-text-main focus:outline-none focus:border-primary transition-colors"
-                  placeholder="Your Name"
-                  required
-                />
-              </div>
-              
-              <div className="flex flex-col gap-1.5">
-                <label htmlFor="email" className="text-sm font-mono text-text-main">Email</label>
-                <input 
-                  type="email" 
-                  id="email" 
-                  className="bg-background border border-border rounded px-4 py-3 text-text-main focus:outline-none focus:border-primary transition-colors"
-                  placeholder="your.email@example.com"
-                  required
-                />
-              </div>
-              
-              <div className="flex flex-col gap-1.5">
-                <label htmlFor="subject" className="text-sm font-mono text-text-main">Subject</label>
-                <input 
-                  type="text" 
-                  id="subject" 
-                  className="bg-background border border-border rounded px-4 py-3 text-text-main focus:outline-none focus:border-primary transition-colors"
-                  placeholder="What is this regarding?"
-                  required
-                />
-              </div>
-              
-              <div className="flex flex-col gap-1.5">
-                <label htmlFor="message" className="text-sm font-mono text-text-main">Message</label>
-                <textarea 
-                  id="message" 
-                  rows={5}
-                  className="bg-background border border-border rounded px-4 py-3 text-text-main focus:outline-none focus:border-primary transition-colors resize-none"
-                  placeholder="Hello Jakir, I would like to discuss..."
-                  required
-                ></textarea>
-              </div>
-              
-              <button type="submit" className="bg-primary hover:bg-primary-dark text-background font-bold py-3 px-6 rounded transition-colors mt-2">
-                Send Message
-              </button>
-            </form>
+            <ContactForm className="relative z-10" />
           </div>
         </div>
       </div>

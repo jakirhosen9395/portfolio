@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { ArrowRight, BriefcaseBusiness, Download, Mail, ServerCog, ShieldCheck, TerminalSquare } from 'lucide-react'
+import type { SiteSettings } from '@/types/portfolio'
 
 const statusRows = [
   ['AWS', 'ONLINE'],
@@ -13,7 +14,7 @@ const statusRows = [
   ['INFRASTRUCTURE', 'READY'],
 ]
 
-export default function HeroSection() {
+export default function HeroSection({ settings }: { settings: SiteSettings }) {
   return (
     <section className="relative isolate overflow-hidden border-b border-border bg-[radial-gradient(circle_at_top,_rgba(20,184,166,0.15),_transparent_35%),_linear-gradient(180deg,_rgba(15,17,21,1),_rgba(15,17,21,0.96))]">
       <div className="absolute inset-0 opacity-40 [background-image:linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] [background-size:36px_36px]" />
@@ -21,7 +22,7 @@ export default function HeroSection() {
         <motion.div initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="relative z-10">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/8 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.22em] text-primary shadow-[inset_0_0_30px_rgba(20,184,166,0.08)]">
             <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-            Available for DevOps / Cloud / Platform Engineering
+            {settings.availabilityStatus}
           </div>
 
           <h1 className="max-w-3xl text-4xl font-black tracking-[-0.07em] text-white sm:text-5xl lg:text-7xl">
@@ -29,14 +30,14 @@ export default function HeroSection() {
           </h1>
 
           <p className="mt-6 max-w-xl text-lg text-slate-300">
-            DevOps Engineer focused on cloud infrastructure, Kubernetes, CI/CD, automation, security, and observability.
+            {settings.shortTagline}
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <Link href="/#projects" className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300">
               View Projects <ArrowRight className="h-4 w-4" />
             </Link>
-            <a href="/resume.pdf" className="inline-flex items-center gap-2 rounded-md border border-border bg-surface/70 px-5 py-3 text-sm font-semibold text-white transition hover:border-primary/60 hover:text-primary">
+            <a href="/resume" className="inline-flex items-center gap-2 rounded-md border border-border bg-surface/70 px-5 py-3 text-sm font-semibold text-white transition hover:border-primary/60 hover:text-primary">
               <Download className="h-4 w-4" /> Download Resume
             </a>
             <Link href="/#contact" className="inline-flex items-center gap-2 rounded-md border border-border px-5 py-3 text-sm font-semibold text-slate-200 transition hover:border-border/80 hover:bg-surface/70">

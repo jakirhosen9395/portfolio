@@ -1,9 +1,11 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowUpRight, Code2, ExternalLink } from 'lucide-react'
-import { projects } from '@/lib/site-data'
+import { getPortfolioContent } from '@/sanity/lib/content'
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  const { projects } = await getPortfolioContent()
+
   return (
     <main className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
       <div className="mb-12 max-w-3xl">
@@ -15,7 +17,7 @@ export default function ProjectsPage() {
         {projects.map((project) => (
           <article key={project.slug} className="group overflow-hidden rounded-2xl border border-border bg-surface/70">
             <div className="relative h-64 overflow-hidden border-b border-border">
-              <Image src={project.coverImage} alt={project.title} fill className="object-cover transition duration-500 group-hover:scale-105" />
+              {project.coverImage && <Image src={project.coverImage} alt={project.title} fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover transition duration-500 group-hover:scale-105" />}
             </div>
 
             <div className="p-6">

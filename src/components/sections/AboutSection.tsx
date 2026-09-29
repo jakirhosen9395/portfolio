@@ -1,6 +1,7 @@
 import { Server, Activity, Shield, Terminal } from 'lucide-react'
+import type { SiteSettings } from '@/types/portfolio'
 
-export default function AboutSection() {
+export default function AboutSection({ settings }: { settings: SiteSettings }) {
   return (
     <section id="about" className="py-24 relative border-t border-border bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -11,7 +12,7 @@ export default function AboutSection() {
             </h2>
             <div className="space-y-6 text-text-muted">
               <p>
-                I work at the intersection of application delivery and infrastructure, focusing on reliable deployments, automation, observability, cloud infrastructure, and secure systems.
+                {settings.longIntroduction}
               </p>
               <p>
                 As a DevOps engineer, my goal is to bridge the gap between development and operations. I believe in removing repetitive manual operations, building resilient architectures, and providing deep observability into production environments.

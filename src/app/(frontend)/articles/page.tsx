@@ -1,8 +1,10 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { articles } from '@/lib/site-data'
+import { getPortfolioContent } from '@/sanity/lib/content'
 
-export default function ArticlesPage() {
+export default async function ArticlesPage() {
+  const { articles } = await getPortfolioContent()
+
   return (
     <main className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
       <div className="mb-12 max-w-3xl">
@@ -14,7 +16,7 @@ export default function ArticlesPage() {
         {articles.map((article) => (
           <article key={article.slug} className="group overflow-hidden rounded-2xl border border-border bg-surface/60">
             <div className="relative h-56 overflow-hidden border-b border-border">
-              <Image src={article.coverImage} alt={article.title} fill className="object-cover transition duration-500 group-hover:scale-105" />
+                {article.coverImage && <Image src={article.coverImage} alt={article.title} fill sizes="(max-width: 1280px) 33vw, 400px" className="object-cover transition duration-500 group-hover:scale-105" />}
             </div>
             <div className="p-5">
               <div className="mb-3 flex flex-wrap gap-2">

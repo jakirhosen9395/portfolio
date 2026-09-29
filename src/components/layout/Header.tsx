@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Menu, X } from 'lucide-react'
 import { useState } from 'react'
 import CommandPalette from '@/components/command-palette/CommandPalette'
+import type { SiteSettings } from '@/types/portfolio'
 
 const navLinks = [
   { name: 'Home', href: '/' },
@@ -15,7 +16,7 @@ const navLinks = [
   { name: 'Contact', href: '/#contact' },
 ]
 
-export default function Header() {
+export default function Header({ settings }: { settings: SiteSettings }) {
   const [open, setOpen] = useState(false)
 
   return (
@@ -24,7 +25,7 @@ export default function Header() {
         <Link href="/" className="flex items-center gap-2" aria-label="Go to home">
           <div className="flex h-8 w-8 items-center justify-center rounded-md border border-primary/40 bg-primary/10 font-mono text-xs font-bold text-primary">J</div>
           <div className="font-mono text-sm font-semibold tracking-wide text-white">
-            jakir<span className="text-primary">.devops</span>
+            {settings.name}<span className="text-primary">.devops</span>
           </div>
         </Link>
 

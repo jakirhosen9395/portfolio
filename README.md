@@ -7,6 +7,7 @@ A modern portfolio for Md. Jakir Hosen, positioned as a DevOps, Cloud, and Platf
 - Next.js 16 App Router portfolio
 - TypeScript and Tailwind CSS
 - Sanity CMS with Studio support
+- Resend contact delivery through a Vercel server route
 - DevOps-focused visual design language
 - Project and article case study routes
 - Contact and resume support
@@ -69,6 +70,7 @@ NEXT_PUBLIC_SITE_URL=http://localhost:3000
 
 SANITY_API_READ_TOKEN=
 CONTACT_EMAIL=
+CONTACT_FROM_EMAIL=
 RESEND_API_KEY=
 ```
 
@@ -141,9 +143,11 @@ This is the preferred deployment target.
 3. Add the required environment variables.
 4. Deploy.
 
-### Render Deployment
+For the complete account setup, Sanity content workflow, Resend configuration, Vercel variables, free-tier limits, troubleshooting, and known limitations, see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 
-Render can be used for additional services if needed, but the default architecture keeps the frontend on Vercel and uses Sanity as the content layer.
+### Cost and service boundary
+
+Render is not required for this portfolio. The intended architecture is GitHub for source control, Vercel for Next.js hosting and server routes, Sanity for CMS content, and Resend for contact email delivery. No database or separate backend is required.
 
 ## Project Structure
 
@@ -175,7 +179,7 @@ src/
 
 ## Adding Projects
 
-Add or update entries in `src/lib/site-data.ts` to manage project metadata. Each project can include:
+Create or update Project documents in Sanity Studio. Each project can include:
 
 - title and slug
 - category and status
@@ -187,7 +191,7 @@ Add or update entries in `src/lib/site-data.ts` to manage project metadata. Each
 
 ## Adding Articles
 
-Use the article entries in `src/lib/site-data.ts` to add new technical writing posts. Each article supports:
+Create or update Article documents in Sanity Studio. Each article supports:
 
 - title and excerpt
 - cover image
@@ -198,15 +202,15 @@ Use the article entries in `src/lib/site-data.ts` to add new technical writing p
 
 ## Adding Screenshots
 
-Each project includes a gallery field in the data model. Add image URLs or local assets to extend the project case-study layout.
+Each project includes a gallery field in the Sanity schema. Upload images through Studio rather than adding URLs to React components.
 
 ## Troubleshooting
 
-- If `npm run dev` fails because of missing environment variables, populate `.env.local`.
+- If `npm run dev` fails because of missing environment variables, populate `.env.local` from `.env.example`.
 - If Sanity Studio does not load, confirm the project ID and dataset values are correct.
 - If image URLs do not render, check the remote pattern configuration in `next.config.ts`.
 - If the app has stale dependencies, reinstall with `npm install`.
 
 ## Notes
 
-This portfolio is intentionally designed around a DevOps operations-console aesthetic while remaining recruiter-friendly, accessible, and fast. It is easy to extend as content grows and can be adapted to a full CMS-managed version later.
+This portfolio is intentionally designed around a DevOps operations-console aesthetic while remaining recruiter-friendly, accessible, and fast. Published Sanity documents are read server-side with a one-minute revalidation window; confirmed profile and experience data provide a fallback when Sanity is unavailable, while unconfirmed projects and articles remain empty until supplied.

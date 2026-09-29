@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { AnimatePresence, motion } from 'framer-motion'
-import { BriefcaseBusiness, Code2, Command, Download, ExternalLink, Globe, Mail, Search, X } from 'lucide-react'
+import { BriefcaseBusiness, Command, Download, ExternalLink, Mail, Search, X } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 
 const commands = [
@@ -11,10 +11,8 @@ const commands = [
   { label: 'Go to Experience', href: '/#experience', icon: BriefcaseBusiness },
   { label: 'Go to Skills', href: '/#skills', icon: ExternalLink },
   { label: 'Go to Articles', href: '/articles', icon: ExternalLink },
-  { label: 'Download Resume', href: '/resume.pdf', icon: Download },
-  { label: 'Open GitHub', href: 'https://github.com/', icon: Code2 },
-  { label: 'Open LinkedIn', href: 'https://www.linkedin.com/', icon: Globe },
-  { label: 'Contact Jakir', href: '/#contact', icon: Mail },
+  { label: 'Download Resume', href: '/resume', icon: Download },
+  { label: 'Open Contact Page', href: '/contact', icon: Mail },
 ]
 
 export default function CommandPalette() {

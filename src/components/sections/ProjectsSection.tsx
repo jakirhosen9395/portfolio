@@ -1,26 +1,8 @@
 import Link from 'next/link'
 import { Terminal, Cloud, ArrowRight } from 'lucide-react'
+import type { Project } from '@/types/portfolio'
 
-const featuredProjects = [
-  {
-    title: 'Platform Infrastructure Case Study',
-    slug: 'platform-infrastructure-case-study',
-    description: 'Placeholder project entry for a real platform infrastructure case study that will be replaced with confirmed work when available.',
-    category: 'Cloud Infrastructure',
-    status: 'DRAFT',
-    tech: ['AWS', 'Terraform', 'Docker', 'Kubernetes', 'Observability']
-  },
-  {
-    title: 'Security Monitoring Case Study',
-    slug: 'security-monitoring-case-study',
-    description: 'Placeholder project entry for a real security monitoring and incident-response project that will be updated with verified details.',
-    category: 'Security Engineering',
-    status: 'DRAFT',
-    tech: ['Wazuh', 'Elasticsearch', 'Kibana', 'Linux', 'Monitoring']
-  }
-]
-
-export default function ProjectsSection() {
+export default function ProjectsSection({ projects }: { projects: Project[] }) {
   return (
     <section id="projects" className="py-24 relative border-t border-border bg-surface">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -34,7 +16,7 @@ export default function ProjectsSection() {
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {featuredProjects.map((project, idx) => (
+          {projects.slice(0, 2).map((project, idx) => (
             <div key={idx} className="glass-panel p-1 rounded-lg group">
               <div className="p-8 h-full bg-background rounded-md flex flex-col">
                 <div className="flex justify-between items-start mb-6">
@@ -53,12 +35,12 @@ export default function ProjectsSection() {
                   </Link>
                 </h3>
                 
-                <p className="text-text-muted mb-8 flex-1">
-                  {project.description}
+                  <p className="text-text-muted mb-8 flex-1">
+                  {project.shortDescription}
                 </p>
                 
                 <div className="flex flex-wrap gap-2 mb-6">
-                  {project.tech.map((t, i) => (
+                  {project.technologies.map((t, i) => (
                     <span key={i} className="text-xs font-mono bg-surface border border-border px-2 py-1 rounded text-text-muted">
                       {t}
                     </span>

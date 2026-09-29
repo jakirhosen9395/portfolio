@@ -1,15 +1,27 @@
 import Image from 'next/image'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import { notFound } from 'next/navigation'
-import { articles } from '@/lib/site-data'
+import { getPortfolioContent } from '@/sanity/lib/content'
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const { articles } = await getPortfolioContent()
   return articles.map((article) => ({ slug: article.slug }))
 }
 
-export default function ArticleDetailPage({ params }: { params: { slug: string } }) {
-  const article = articles.find((item) => item.slug === params.slug)
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params
+  const { articles } = await getPortfolioContent()
+  const article = articles.find((item) => item.slug === slug)
+  if (!article) return {}
+  return { title: article.title, description: article.excerpt, openGraph: { title: article.title, description: article.excerpt, type: 'article', images: article.coverImage ? [article.coverImage] : undefined } }
+}
+
+export default async function ArticleDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const { articles } = await getPortfolioContent()
+  const article = articles.find((item) => item.slug === slug)
 
   if (!article) {
     return notFound()
@@ -23,7 +35,7 @@ export default function ArticleDetailPage({ params }: { params: { slug: string }
 
       <article className="overflow-hidden rounded-2xl border border-border bg-surface/70">
         <div className="relative h-80 w-full overflow-hidden border-b border-border">
-          <Image src={article.coverImage} alt={article.title} fill className="object-cover" />
+          {article.coverImage && <Image src={article.coverImage} alt={article.title} fill sizes="(max-width: 768px) 100vw, 800px" className="object-cover" />}
         </div>
 
         <div className="space-y-8 p-6 md:p-8">

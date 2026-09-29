@@ -1,9 +1,10 @@
 import type { MetadataRoute } from 'next'
-import { articles, projects } from '@/lib/site-data'
+import { getPortfolioContent } from '@/sanity/lib/content'
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://your-domain.com'
-  const staticRoutes = ['', '/about', '/projects', '/articles', '/contact']
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://your-project.vercel.app'
+  const { articles, projects } = await getPortfolioContent()
+  const staticRoutes = ['', '/projects', '/articles', '/contact']
 
   return [
     ...staticRoutes.map((route) => ({

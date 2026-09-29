@@ -1,8 +1,8 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { articles } from '@/lib/site-data'
+import type { Article } from '@/types/portfolio'
 
-export default function ArticlesSection() {
+export default function ArticlesSection({ articles }: { articles: Article[] }) {
   return (
     <section id="articles" className="border-t border-border bg-background py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -18,7 +18,7 @@ export default function ArticlesSection() {
           {articles.map((article) => (
             <article key={article.slug} className="group overflow-hidden rounded-2xl border border-border bg-surface/70">
               <div className="relative h-52 overflow-hidden border-b border-border">
-                <Image src={article.coverImage} alt={article.title} fill className="object-cover transition duration-500 group-hover:scale-105" />
+                {article.coverImage && <Image src={article.coverImage} alt={article.title} fill sizes="(max-width: 1280px) 33vw, 400px" className="object-cover transition duration-500 group-hover:scale-105" />}
               </div>
               <div className="p-5">
                 <div className="mb-3 flex flex-wrap gap-2">

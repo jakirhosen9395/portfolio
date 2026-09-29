@@ -6,12 +6,15 @@ export type SiteSettings = {
   email: string
   location: string
   availabilityStatus: string
+  profileImage?: string
+  profileImages?: string[]
   github: string
   gitlab: string
   linkedin: string
   resumeUrl: string
   seoTitle: string
   seoDescription: string
+  ogImage?: string
 }
 
 export type SocialLink = {
