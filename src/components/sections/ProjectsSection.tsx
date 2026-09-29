@@ -1,68 +1,31 @@
+import Image from 'next/image'
 import Link from 'next/link'
-import { Terminal, Cloud, ArrowRight } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 import type { Project } from '@/types/portfolio'
 
 export default function ProjectsSection({ projects }: { projects: Project[] }) {
   return (
-    <section id="projects" className="py-24 relative border-t border-border bg-surface">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-end mb-12">
-          <h2 className="text-3xl font-bold font-mono">
-            <span className="text-primary mr-2">/</span>featured_projects
-          </h2>
-          <Link href="/projects" className="hidden md:flex items-center gap-2 text-primary hover:text-primary-dark transition-colors font-mono text-sm">
-            View All Architecture <ArrowRight className="w-4 h-4" />
-          </Link>
+    <section id="projects" className="border-b border-border bg-background py-24 sm:py-32">
+      <div className="section-shell">
+        <div className="mb-14 flex flex-col justify-between gap-5 md:flex-row md:items-end">
+          <div><p className="eyebrow">04 / Selected work</p><h2 className="mt-5 text-3xl font-semibold tracking-[-0.04em] text-white sm:text-4xl">Systems, platforms, and lessons learned.</h2></div>
+          <Link href="/projects" className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-amber-300">Explore all case studies <ArrowUpRight className="h-4 w-4" /></Link>
         </div>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {projects.slice(0, 2).map((project, idx) => (
-            <div key={idx} className="glass-panel p-1 rounded-lg group">
-              <div className="p-8 h-full bg-background rounded-md flex flex-col">
-                <div className="flex justify-between items-start mb-6">
-                  <div className="flex items-center gap-2 text-xs font-mono font-medium tracking-wider text-text-muted">
-                    <Cloud className="w-4 h-4 text-primary" />
-                    <span>{project.category}</span>
-                  </div>
-                  <span className="px-2 py-1 text-[10px] font-mono border border-success/30 text-success rounded-sm bg-success/5">
-                    {project.status}
-                  </span>
+        {projects.length ? (
+          <div className="grid gap-6 lg:grid-cols-2">
+            {projects.slice(0, 4).map((project) => (
+              <article key={project.slug} className="group overflow-hidden rounded-2xl border border-border bg-surface/60 transition hover:border-primary/40">
+                <div className="relative aspect-[16/9] overflow-hidden bg-surface-hover">
+                  {project.coverImage && <Image src={project.coverImage} alt={project.title} fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover transition duration-700 group-hover:scale-105" />}
+                  <div className="absolute inset-x-4 bottom-4 flex items-center justify-between rounded-xl border border-white/10 bg-black/65 px-4 py-3 text-xs backdrop-blur-md"><span className="uppercase tracking-[0.16em] text-primary">{project.category}</span><span className="text-slate-300">{project.status}</span></div>
                 </div>
-                
-                <h3 className="text-2xl font-bold mb-4 font-mono group-hover:text-primary transition-colors">
-                  <Link href={`/projects/${project.slug}`}>
-                    {project.title}
-                  </Link>
-                </h3>
-                
-                  <p className="text-text-muted mb-8 flex-1">
-                  {project.shortDescription}
-                </p>
-                
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {project.technologies.map((t, i) => (
-                    <span key={i} className="text-xs font-mono bg-surface border border-border px-2 py-1 rounded text-text-muted">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-                
-                <Link 
-                  href={`/projects/${project.slug}`}
-                  className="inline-flex items-center gap-2 text-sm font-medium text-text-main hover:text-primary transition-colors border-t border-border pt-4 w-full"
-                >
-                  <Terminal className="w-4 h-4" /> View Architecture & Case Study
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
-        
-        <div className="mt-8 text-center md:hidden">
-          <Link href="/projects" className="inline-flex items-center gap-2 text-primary hover:text-primary-dark transition-colors font-mono text-sm">
-            View All Architecture <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
+                <div className="p-6 sm:p-8"><h3 className="text-2xl font-semibold text-white">{project.title}</h3><p className="mt-3 max-w-xl text-sm leading-7 text-text-muted">{project.shortDescription}</p><div className="mt-6 flex flex-wrap gap-2">{project.technologies.slice(0, 5).map((technology) => <span key={technology} className="rounded-full border border-border px-3 py-1 text-xs text-text-muted">{technology}</span>)}</div><Link href={`/projects/${project.slug}`} className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-white transition group-hover:text-primary">View case study <ArrowUpRight className="h-4 w-4" /></Link></div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div className="rounded-2xl border border-dashed border-border bg-surface/40 p-12 text-center"><p className="text-lg font-medium text-white">Case studies are being prepared.</p><p className="mt-2 text-sm text-text-muted">Publish verified project work in Sanity Studio to make it visible here.</p></div>
+        )}
       </div>
     </section>
   )

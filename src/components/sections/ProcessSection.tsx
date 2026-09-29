@@ -1,35 +1,15 @@
-'use client'
-
-import { motion } from 'framer-motion'
+import { ArrowRight } from 'lucide-react'
 import { processStages } from '@/lib/site-data'
 
 export default function ProcessSection() {
   return (
-    <section id="process" className="border-t border-border bg-surface/70 py-24">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-12 max-w-2xl">
-          <p className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-primary">Engineering Process</p>
-          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">From requirement to reliable operations.</h2>
-        </div>
-
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-7">
-          {processStages.map((stage, index) => (
-            <motion.div
-              key={stage.title}
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.35, delay: index * 0.05 }}
-              className="group relative rounded-xl border border-border bg-background p-5 transition hover:border-primary/60 hover:bg-surface/80"
-            >
-              <div className="mb-4 flex items-center justify-between">
-                <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-slate-400">0{index + 1}</span>
-                {index < processStages.length - 1 && <span className="hidden text-slate-500 xl:block">↓</span>}
-              </div>
-              <h3 className="mb-3 text-lg font-semibold text-white">{stage.title}</h3>
-              <p className="text-sm leading-6 text-slate-300">{stage.description}</p>
-            </motion.div>
-          ))}
+    <section id="process" className="border-b border-border bg-surface/45 py-24 sm:py-32">
+      <div className="section-shell">
+        <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr]">
+          <div><p className="eyebrow">05 / How I work</p><h2 className="mt-5 text-3xl font-semibold tracking-[-0.04em] text-white sm:text-4xl">Small feedback loops. Stronger systems.</h2></div>
+          <div className="grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
+            {processStages.map((stage, index) => <div key={stage.title} className="bg-background p-6"><div className="flex items-center justify-between text-xs font-mono text-primary"><span>0{index + 1}</span>{index < processStages.length - 1 && <ArrowRight className="h-4 w-4 text-accent" />}</div><h3 className="mt-8 font-semibold text-white">{stage.title}</h3><p className="mt-2 text-sm leading-6 text-text-muted">{stage.description}</p></div>)}
+          </div>
         </div>
       </div>
     </section>

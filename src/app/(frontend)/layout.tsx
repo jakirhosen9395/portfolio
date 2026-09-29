@@ -1,14 +1,14 @@
 import type { Metadata } from 'next'
-import { Inter, JetBrains_Mono } from 'next/font/google'
+import { JetBrains_Mono, Manrope } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import LenisProvider from '@/components/providers/LenisProvider'
 import { getPortfolioContent } from '@/sanity/lib/content'
 
-const inter = Inter({
+const manrope = Manrope({
   subsets: ['latin'],
-  variable: '--font-inter',
+  variable: '--font-manrope',
   display: 'swap',
 })
 
@@ -58,7 +58,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   }).replace(/</g, '\\u003c')
 
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${manrope.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
       <body className="bg-background text-slate-100 antialiased selection:bg-primary/40 selection:text-white">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: personJsonLd }} />
         <LenisProvider>

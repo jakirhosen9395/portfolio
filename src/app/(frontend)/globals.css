@@ -1,18 +1,18 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #0b0d12;
-  --color-surface: #11161d;
-  --color-surface-hover: #171d27;
-  --color-primary: #14b8a6;
-  --color-primary-dark: #0f766e;
-  --color-accent: #f59e0b;
+  --color-background: #0b0d10;
+  --color-surface: #11151a;
+  --color-surface-hover: #171c22;
+  --color-primary: #f5b942;
+  --color-primary-dark: #c98d1e;
+  --color-accent: #45c2b1;
   --color-danger: #ef4444;
   --color-success: #22c55e;
   --color-text-main: #f8fafc;
-  --color-text-muted: #94a3b8;
-  --color-border: #1f2a36;
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --color-text-muted: #a7afba;
+  --color-border: rgba(255, 255, 255, 0.09);
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
@@ -32,7 +32,7 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    line-height: 1.6;
+    line-height: 1.65;
   }
 
   a {
@@ -79,12 +79,16 @@
 }
 
 .glass-panel {
-  background: rgba(17, 22, 29, 0.8);
-  border: 1px solid rgba(148, 163, 184, 0.12);
-  backdrop-filter: blur(12px);
+  background: rgba(17, 21, 26, 0.82);
+  border: 1px solid var(--color-border);
+  backdrop-filter: blur(16px);
 }
 
 .section-shell {
   @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+
+.eyebrow {
+  @apply text-xs font-semibold uppercase tracking-[0.24em] text-primary;
 }
 

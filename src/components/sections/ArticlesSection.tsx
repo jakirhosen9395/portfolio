@@ -4,35 +4,10 @@ import type { Article } from '@/types/portfolio'
 
 export default function ArticlesSection({ articles }: { articles: Article[] }) {
   return (
-    <section id="articles" className="border-t border-border bg-background py-24">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-12 flex items-end justify-between gap-4">
-          <div>
-            <p className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-primary">Articles</p>
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">Engineering notes and practical lessons.</h2>
-          </div>
-          <Link href="/articles" className="hidden text-sm font-semibold text-primary hover:text-cyan-300 md:inline-flex">View Journal →</Link>
-        </div>
-
-        <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-          {articles.map((article) => (
-            <article key={article.slug} className="group overflow-hidden rounded-2xl border border-border bg-surface/70">
-              <div className="relative h-52 overflow-hidden border-b border-border">
-                {article.coverImage && <Image src={article.coverImage} alt={article.title} fill sizes="(max-width: 1280px) 33vw, 400px" className="object-cover transition duration-500 group-hover:scale-105" />}
-              </div>
-              <div className="p-5">
-                <div className="mb-3 flex flex-wrap gap-2">
-                  {article.tags.map((tag) => (
-                    <span key={tag} className="rounded-full border border-border bg-background px-2 py-1 text-[10px] uppercase tracking-[0.12em] text-slate-300">{tag}</span>
-                  ))}
-                </div>
-                <h3 className="mb-3 text-xl font-semibold text-white">{article.title}</h3>
-                <p className="mb-5 text-sm leading-6 text-slate-300">{article.excerpt}</p>
-                <Link href={`/articles/${article.slug}`} className="inline-flex items-center text-sm font-semibold text-primary hover:text-cyan-300">Read article →</Link>
-              </div>
-            </article>
-          ))}
-        </div>
+    <section id="articles" className="border-b border-border bg-background py-24 sm:py-32">
+      <div className="section-shell">
+        <div className="mb-14 flex flex-col justify-between gap-5 md:flex-row md:items-end"><div><p className="eyebrow">06 / Notes</p><h2 className="mt-5 text-3xl font-semibold tracking-[-0.04em] text-white sm:text-4xl">Practical notes from the work.</h2></div><Link href="/articles" className="text-sm font-semibold text-primary hover:text-amber-300">Read the journal <span aria-hidden="true">→</span></Link></div>
+        {articles.length ? <div className="grid gap-5 md:grid-cols-3">{articles.slice(0, 3).map((article) => <article key={article.slug} className="overflow-hidden rounded-2xl border border-border bg-surface/60">{article.coverImage && <div className="relative aspect-[16/10]"><Image src={article.coverImage} alt={article.title} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" /></div>}<div className="p-6"><p className="text-xs text-text-muted">{article.publishedDate} · {article.readingTime} min read</p><h3 className="mt-4 text-xl font-semibold text-white">{article.title}</h3><p className="mt-3 text-sm leading-6 text-text-muted">{article.excerpt}</p><Link href={`/articles/${article.slug}`} className="mt-6 inline-flex text-sm font-semibold text-primary">Read article →</Link></div></article>)}</div> : <div className="rounded-2xl border border-dashed border-border bg-surface/40 p-12 text-center"><p className="text-lg font-medium text-white">Technical notes are coming soon.</p><p className="mt-2 text-sm text-text-muted">Articles will appear here after they are published in Sanity Studio.</p></div>}
       </div>
     </section>
   )

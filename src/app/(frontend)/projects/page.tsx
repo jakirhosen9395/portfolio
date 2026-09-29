@@ -9,11 +9,11 @@ export default async function ProjectsPage() {
   return (
     <main className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
       <div className="mb-12 max-w-3xl">
-        <p className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-primary">Featured Work</p>
-        <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">Infrastructure and platform case studies.</h1>
+        <p className="eyebrow">Selected work</p>
+        <h1 className="mt-5 text-4xl font-semibold tracking-[-0.04em] text-white sm:text-6xl">Infrastructure and platform case studies.</h1>
       </div>
 
-      <div className="grid gap-8 lg:grid-cols-2">
+      {projects.length ? <div className="grid gap-6 lg:grid-cols-2">
         {projects.map((project) => (
           <article key={project.slug} className="group overflow-hidden rounded-2xl border border-border bg-surface/70">
             <div className="relative h-64 overflow-hidden border-b border-border">
@@ -51,7 +51,7 @@ export default async function ProjectsPage() {
             </div>
           </article>
         ))}
-      </div>
+      </div> : <div className="rounded-2xl border border-dashed border-border bg-surface/40 p-12 text-center"><p className="text-lg font-medium text-white">Verified case studies are being prepared.</p><p className="mt-2 text-sm text-text-muted">Publish real project content in Sanity Studio to make it visible here.</p></div>}
     </main>
   )
 }

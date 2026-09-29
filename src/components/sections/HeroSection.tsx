@@ -1,85 +1,77 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
+import { ArrowUpRight, Download, Mail, MapPin, ServerCog, ShieldCheck } from 'lucide-react'
 import { motion } from 'framer-motion'
-import { ArrowRight, BriefcaseBusiness, Download, Mail, ServerCog, ShieldCheck, TerminalSquare } from 'lucide-react'
 import type { SiteSettings } from '@/types/portfolio'
 
-const statusRows = [
-  ['AWS', 'ONLINE'],
-  ['KUBERNETES', 'ACTIVE'],
-  ['CI/CD', 'RUNNING'],
-  ['MONITORING', 'ONLINE'],
-  ['SECURITY', 'ENABLED'],
-  ['INFRASTRUCTURE', 'READY'],
-]
-
 export default function HeroSection({ settings }: { settings: SiteSettings }) {
+  const portrait = settings.profileImage
+
   return (
-    <section className="relative isolate overflow-hidden border-b border-border bg-[radial-gradient(circle_at_top,_rgba(20,184,166,0.15),_transparent_35%),_linear-gradient(180deg,_rgba(15,17,21,1),_rgba(15,17,21,0.96))]">
-      <div className="absolute inset-0 opacity-40 [background-image:linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] [background-size:36px_36px]" />
-      <div className="mx-auto grid min-h-[88vh] max-w-7xl items-center gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[1.2fr_0.8fr] lg:px-8 lg:py-24">
-        <motion.div initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="relative z-10">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/8 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.22em] text-primary shadow-[inset_0_0_30px_rgba(20,184,166,0.08)]">
-            <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-            {settings.availabilityStatus}
-          </div>
-
-          <h1 className="max-w-3xl text-4xl font-black tracking-[-0.07em] text-white sm:text-5xl lg:text-7xl">
-            I build <span className="bg-gradient-to-r from-primary via-cyan-300 to-sky-400 bg-clip-text text-transparent">reliable infrastructure</span> for modern applications.
+    <section className="relative overflow-hidden border-b border-border bg-background">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_78%_18%,rgba(69,194,177,0.13),transparent_28%),radial-gradient(circle_at_18%_20%,rgba(245,185,66,0.08),transparent_30%)]" />
+      <div className="section-shell relative grid min-h-[calc(100vh-4rem)] items-center gap-14 py-20 lg:grid-cols-[1.05fr_0.95fr] lg:py-28">
+        <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55 }}>
+          <p className="mb-6 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.28em] text-primary">
+            <span className="h-px w-10 bg-primary" /> DevOps Engineer
+          </p>
+          <h1 className="max-w-3xl text-5xl font-semibold leading-[1.02] tracking-[-0.055em] text-white sm:text-6xl lg:text-8xl">
+            {settings.name}
           </h1>
-
-          <p className="mt-6 max-w-xl text-lg text-slate-300">
-            {settings.shortTagline}
+          <p className="mt-7 max-w-2xl text-2xl font-medium leading-tight text-slate-200 sm:text-3xl">
+            Building reliable cloud infrastructure, automation, and production systems.
+          </p>
+          <p className="mt-6 max-w-xl text-base leading-7 text-text-muted sm:text-lg">
+            {settings.shortTagline}. I design calm, observable delivery systems that help teams ship with confidence.
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center gap-4">
-            <Link href="/#projects" className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300">
-              View Projects <ArrowRight className="h-4 w-4" />
+          <div className="mt-9 flex flex-wrap gap-3">
+            <Link href="/#projects" className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-amber-300">
+              View projects <ArrowUpRight className="h-4 w-4" />
             </Link>
-            <a href="/resume" className="inline-flex items-center gap-2 rounded-md border border-border bg-surface/70 px-5 py-3 text-sm font-semibold text-white transition hover:border-primary/60 hover:text-primary">
-              <Download className="h-4 w-4" /> Download Resume
-            </a>
-            <Link href="/#contact" className="inline-flex items-center gap-2 rounded-md border border-border px-5 py-3 text-sm font-semibold text-slate-200 transition hover:border-border/80 hover:bg-surface/70">
-              <Mail className="h-4 w-4" /> Contact Me
+            <Link href="/resume" className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-5 py-3 text-sm font-semibold text-white transition hover:border-primary/60 hover:text-primary">
+              <Download className="h-4 w-4" /> Resume
+            </Link>
+            <Link href="/#contact" className="inline-flex items-center gap-2 rounded-full px-3 py-3 text-sm font-semibold text-text-muted transition hover:text-white">
+              <Mail className="h-4 w-4" /> Let&apos;s connect
             </Link>
           </div>
 
-          <div className="mt-10 flex flex-wrap gap-3 text-xs uppercase tracking-[0.18em] text-slate-400">
-            {['AWS', 'Linux', 'Docker', 'Kubernetes', 'Terraform', 'ArgoCD', 'Prometheus', 'Grafana'].map((tech) => (
-              <span key={tech} className="rounded-full border border-border bg-surface/60 px-2.5 py-1.5 text-[10px]">{tech}</span>
-            ))}
+          <div className="mt-12 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-border pt-5 text-sm text-text-muted">
+            <span className="inline-flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-accent" /> {settings.availabilityStatus}</span>
+            <span className="inline-flex items-center gap-2"><MapPin className="h-4 w-4 text-primary" /> {settings.location}</span>
           </div>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.55, delay: 0.1 }} className="relative z-10">
-          <div className="absolute -inset-2 rounded-2xl bg-gradient-to-br from-primary/30 via-cyan-500/10 to-transparent blur-2xl" />
-          <div className="relative overflow-hidden rounded-2xl border border-border bg-[#090b10]/90 shadow-[0_0_0_1px_rgba(148,163,184,0.06),0_30px_70px_rgba(2,6,23,0.8)]">
-            <div className="flex items-center justify-between border-b border-border bg-surface/80 px-4 py-3">
-              <div className="flex items-center gap-2">
-                <span className="h-3 w-3 rounded-full bg-red-400/80" />
-                <span className="h-3 w-3 rounded-full bg-amber-400/80" />
-                <span className="h-3 w-3 rounded-full bg-green-400/80" />
-              </div>
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-400">system-status.sh</span>
-            </div>
-
-            <div className="space-y-6 p-6 font-mono text-sm text-slate-200">
-              <div className="text-xs uppercase tracking-[0.2em] text-slate-400">Infrastructure Status</div>
-              <div className="grid grid-cols-2 gap-x-4 gap-y-3">
-                {statusRows.map(([label, value]) => (
-                  <div key={label} className="flex items-center justify-between gap-3 rounded border border-border bg-surface/40 px-2 py-2 text-[11px] uppercase tracking-[0.14em]">
-                    <span className="text-slate-300">{label}</span>
-                    <span className={value === 'ONLINE' || value === 'RUNNING' || value === 'ACTIVE' ? 'text-primary' : value === 'READY' ? 'text-cyan-300' : 'text-amber-300'}>{value}</span>
+        <motion.div initial={{ opacity: 0, x: 18 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.65, delay: 0.08 }} className="mx-auto w-full max-w-md lg:ml-auto">
+          <div className="relative">
+            <div className="absolute -inset-5 rounded-[2rem] bg-accent/10 blur-3xl" />
+            <div className="relative overflow-hidden rounded-[2rem] border border-border bg-surface p-3 shadow-2xl shadow-black/30">
+              <div className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem] bg-[#20262a]">
+                {portrait ? (
+                  <Image src={portrait} alt={`${settings.name} profile portrait`} fill priority sizes="(max-width: 1024px) 90vw, 420px" className="object-cover" />
+                ) : (
+                  <div className="flex h-full flex-col items-center justify-center bg-[radial-gradient(circle_at_50%_28%,rgba(245,185,66,0.2),transparent_22%),linear-gradient(145deg,#1b2226,#101417)] p-8 text-center">
+                    <div className="flex h-24 w-24 items-center justify-center rounded-full border border-primary/50 bg-primary/10 text-3xl font-semibold text-primary">JH</div>
+                    <p className="mt-6 text-sm font-semibold uppercase tracking-[0.2em] text-white">Profile portrait</p>
+                    <p className="mt-2 max-w-[14rem] text-sm leading-6 text-slate-400">Upload your real photo in Sanity Site Settings to complete this identity panel.</p>
                   </div>
-                ))}
+                )}
+                <div className="absolute inset-x-4 bottom-4 rounded-2xl border border-white/10 bg-black/65 p-4 backdrop-blur-md">
+                  <div className="flex items-center justify-between gap-4">
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.2em] text-primary">Operational focus</p>
+                      <p className="mt-1 text-sm font-medium text-white">Cloud · Automation · Security</p>
+                    </div>
+                    <ServerCog className="h-5 w-5 text-accent" />
+                  </div>
+                </div>
               </div>
-
-              <div className="grid gap-3 border-t border-border pt-4 text-[11px] text-slate-400">
-                <div className="flex items-center gap-2"><TerminalSquare className="h-4 w-4 text-primary" /> Build pipeline healthy</div>
-                <div className="flex items-center gap-2"><ServerCog className="h-4 w-4 text-cyan-300" /> Cloud workloads provisioned</div>
-                <div className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-emerald-400" /> Security controls enabled</div>
-                <div className="flex items-center gap-2"><BriefcaseBusiness className="h-4 w-4 text-amber-300" /> Available for design and delivery work</div>
+              <div className="flex items-center justify-between px-2 pb-1 pt-4 text-xs text-text-muted">
+                <span className="inline-flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-accent" /> Reliable by design</span>
+                <span className="font-mono">01 / 01</span>
               </div>
             </div>
           </div>

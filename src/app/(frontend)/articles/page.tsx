@@ -8,11 +8,11 @@ export default async function ArticlesPage() {
   return (
     <main className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
       <div className="mb-12 max-w-3xl">
-        <p className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-primary">Engineering Journal</p>
-        <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">Infrastructure insights and practical engineering notes.</h1>
+        <p className="eyebrow">Engineering journal</p>
+        <h1 className="mt-5 text-4xl font-semibold tracking-[-0.04em] text-white sm:text-6xl">Infrastructure insights and practical engineering notes.</h1>
       </div>
 
-      <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+      {articles.length ? <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
         {articles.map((article) => (
           <article key={article.slug} className="group overflow-hidden rounded-2xl border border-border bg-surface/60">
             <div className="relative h-56 overflow-hidden border-b border-border">
@@ -36,7 +36,7 @@ export default async function ArticlesPage() {
             </div>
           </article>
         ))}
-      </div>
+      </div> : <div className="rounded-2xl border border-dashed border-border bg-surface/40 p-12 text-center"><p className="text-lg font-medium text-white">Technical notes are coming soon.</p><p className="mt-2 text-sm text-text-muted">Publish articles in Sanity Studio to make them visible here.</p></div>}
     </main>
   )
 }

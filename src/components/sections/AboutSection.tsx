@@ -1,48 +1,33 @@
-import { Server, Activity, Shield, Terminal } from 'lucide-react'
+import { Activity, Boxes, ShieldCheck, Terminal } from 'lucide-react'
 import type { SiteSettings } from '@/types/portfolio'
+
+const focusAreas = [
+  { label: 'Cloud foundations', detail: 'AWS networks, compute, storage, and delivery paths.', icon: Boxes },
+  { label: 'Delivery systems', detail: 'CI/CD workflows that make releases repeatable and visible.', icon: Terminal },
+  { label: 'Operational clarity', detail: 'Monitoring, logs, alerts, and useful feedback loops.', icon: Activity },
+  { label: 'Security by default', detail: 'Practical controls that protect systems without slowing teams down.', icon: ShieldCheck },
+]
 
 export default function AboutSection({ settings }: { settings: SiteSettings }) {
   return (
-    <section id="about" className="py-24 relative border-t border-border bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    <section id="about" className="border-b border-border bg-surface/45 py-24 sm:py-32">
+      <div className="section-shell">
+        <div className="grid gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24">
           <div>
-            <h2 className="text-3xl font-bold mb-6 font-mono">
-              <span className="text-primary mr-2">/</span>about
-            </h2>
-            <div className="space-y-6 text-text-muted">
-              <p>
-                {settings.longIntroduction}
-              </p>
-              <p>
-                As a DevOps engineer, my goal is to bridge the gap between development and operations. I believe in removing repetitive manual operations, building resilient architectures, and providing deep observability into production environments.
-              </p>
-              <p>
-                Whether it is orchestrating containers in Kubernetes, provisioning AWS infrastructure with Terraform, or designing secure CI/CD pipelines, I prioritize performance, security, and developer experience.
-              </p>
-            </div>
+            <p className="eyebrow">01 / About</p>
+            <h2 className="mt-5 max-w-sm text-3xl font-semibold leading-tight tracking-[-0.04em] text-white sm:text-4xl">Infrastructure should feel clear, not mysterious.</h2>
           </div>
-          
-          <div className="grid grid-cols-2 gap-4">
-            <div className="glass-panel p-6 rounded-lg">
-              <Server className="w-8 h-8 text-primary mb-4" />
-              <h3 className="font-bold text-text-main mb-2 font-mono">Infrastructure</h3>
-              <p className="text-sm text-text-muted">Designing and maintaining scalable cloud environments and physical servers.</p>
-            </div>
-            <div className="glass-panel p-6 rounded-lg translate-y-8">
-              <Activity className="w-8 h-8 text-amber-400 mb-4" />
-              <h3 className="font-bold text-text-main mb-2 font-mono">Observability</h3>
-              <p className="text-sm text-text-muted">Implementing comprehensive monitoring, logging, and tracing solutions.</p>
-            </div>
-            <div className="glass-panel p-6 rounded-lg">
-              <Shield className="w-8 h-8 text-success mb-4" />
-              <h3 className="font-bold text-text-main mb-2 font-mono">Security</h3>
-              <p className="text-sm text-text-muted">Enforcing least privilege and continuous security monitoring.</p>
-            </div>
-            <div className="glass-panel p-6 rounded-lg translate-y-8">
-              <Terminal className="w-8 h-8 text-blue-400 mb-4" />
-              <h3 className="font-bold text-text-main mb-2 font-mono">Automation</h3>
-              <p className="text-sm text-text-muted">Removing manual toil through Infrastructure as Code and robust CI/CD.</p>
+          <div>
+            <p className="max-w-3xl text-xl leading-9 text-slate-200 sm:text-2xl">{settings.longIntroduction}</p>
+            <p className="mt-6 max-w-2xl text-base leading-7 text-text-muted">My work sits between application delivery and infrastructure operations: shaping reliable release paths, automating repeatable work, and giving teams the visibility they need when systems are under pressure.</p>
+            <div className="mt-10 grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2">
+              {focusAreas.map(({ label, detail, icon: Icon }) => (
+                <div key={label} className="bg-background p-6 transition hover:bg-surface-hover">
+                  <Icon className="h-5 w-5 text-primary" />
+                  <h3 className="mt-5 text-base font-semibold text-white">{label}</h3>
+                  <p className="mt-2 text-sm leading-6 text-text-muted">{detail}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
